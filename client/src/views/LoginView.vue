@@ -1,6 +1,6 @@
 <template>
-    <div class="h-screen flex items-center justify-center">
-        <img src="../assets/pladder-logo.png"/>
+    <div class="h-[calc(100vh-32px)] flex items-center justify-center">
+        <!-- <img class="w-2/12" src="../assets/pladder-logo-v2.png"/> -->
         <login-form></login-form>
     </div>
   </template>
