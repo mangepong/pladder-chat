@@ -1,4 +1,13 @@
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
-  transpileDependencies: true
+  transpileDependencies: true,
+  pluginOptions: {
+    electronBuilder: {
+      preload: 'src/preload.js',
+    }
+  },
+  configureWebpack: {
+    // target: "node"
+    // Webpack configuration applied to web builds and the electron renderer process
+  },
 })

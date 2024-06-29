@@ -24,7 +24,7 @@
     font-weight: bold;
   }
   
-  .close {
+  .close, .maximize, .minimize {
     /* background-color: #ff0000; */
     color: #fff;
     border: none;
@@ -32,7 +32,7 @@
     cursor: pointer;
   }
 
-  .close:hover {
+  .close:hover, .maximize:hover, .minimize:hover {
     /* background-color: #1d1d1d; */
     z-index: 10;
     color: #1d1d1d;

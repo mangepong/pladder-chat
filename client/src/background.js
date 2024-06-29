@@ -5,6 +5,7 @@ import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
+const path =  require("path")
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
@@ -22,7 +23,8 @@ async function createWindow() {
     titleBarStyle: "hiddenInset", // or 'customButtonsOnHover'
     backgroundColor: '#333', // set a background color for the window
     webPreferences: {
-
+      preload: path.join(__dirname, 'preload.js'),
+      enableRemoteModule: true,
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
@@ -60,6 +62,7 @@ app.on('activate', () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
+  require('@electron/remote/main').initialize();
   if (isDevelopment && !process.env.IS_TEST) {
     // Install Vue Devtools
     try {
