@@ -15,13 +15,12 @@
                     required="true" v-model="password">
             </div>
         </div>
-    
+
         <div class="flex items-center justify-between">
             <div class="flex items-start">
                 <div class="flex items-center h-5">
                     <input id="remember" aria-describedby="remember" type="checkbox"
-                        class="w-4 h-4 border border-gray-300 rounded"
-                        required="">
+                        class="w-4 h-4 border border-gray-300 rounded" required="">
                 </div>
                 <div class="ml-3 text-sm">
                     <label for="remember" class="text-gray-500 dark:text-gray-300">Remember me</label>
@@ -30,19 +29,23 @@
             <a href="#" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot
                 password?</a>
         </div>
-        <button type="submit"
+        <button type="submit" @click="login()"
             class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign
             in</button>
-        <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-            Don’t have an account yet? <a href="#"
-                class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
-        </p>
+        <div class="text-sm font-light text-gray-500 dark:text-gray-400">
+            Don’t have an account yet? <p @click="routeSignup()"
+                class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</p>
+        </div>
     </div>
 </template>
 
 <script>
-// @ is an alias to /src
-//   import HelloWorld from '@/components/HelloWorld.vue'
+
+// import firebase from 'firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useFirebaseAuth } from 'vuefire'
+
+// const auth = useFirebaseAuth()
 
 export default {
     name: 'LoginForm',
@@ -51,6 +54,34 @@ export default {
         return {
             email: "",
             password: "",
+            auth: useFirebaseAuth(),
+        }
+    },
+    methods: {
+        login() {
+            signInWithEmailAndPassword(this.auth, this.email, this.password)
+                .then((data) => {
+                    console.log('Successfully logged in!', data);
+                    this.$router.push("/home")
+                })
+                .catch(error => {
+                    console.log(error.code)
+                    alert(error.message);
+                });
+            // firebase
+            //     .auth()
+            //     .signInWithEmailAndPassword(this.email, this.password)
+            //     .then((data) => {
+            //         console.log('Successfully logged in!', data);
+            //         this.$router.push("/home")
+            //     })
+            //     .catch(error => {
+            //         console.log(error.code)
+            //         alert(error.message);
+            //     });
+        },
+        routeSignup() {
+            this.$router.push("/signup");
         }
     }
 }

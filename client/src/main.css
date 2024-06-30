@@ -37,3 +37,33 @@
     z-index: 10;
     color: #1d1d1d;
   }
+
+  .primaryColor {
+    background-color: #333;
+  }
+
+  .divider-servers {
+      border-top: 2px solid #1d1d1d;
+  }
+
+  .fullHeight {
+    height: calc(100vh - 32px);
+  }
+
+  .serverlist-icons {
+    border-radius: 100px;
+    transition: 0.2s;
+  }
+
+  .serverlist-icons:hover {
+    border-radius: 20px;
+    cursor: pointer;
+  }
+
+  .add-server-icon {
+    transition: 0.2s;
+  }
+
+  .add-server-icon:hover {
+    transform: rotate(90deg);
+  }
