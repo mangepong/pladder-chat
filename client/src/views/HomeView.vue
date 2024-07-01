@@ -1,27 +1,53 @@
 <template>
   <div class="home flex">
-    <server-list/>
-    <div class="mx-auto">
-      {{ currentUser.displayName ?? "null" }}
-      <img class="w-[50px]" :src="currentUser.photoURL" alt="ingen bild"> 
-    </div>
+    <server-list @on-server-change="changeServer($event)" />
+    <profile-box />
+    <channel-list :current-server="currentServer" v-if="currentServer"/>
   </div>
 </template>
 
 <script>
 import ServerList from '../components/home/ServerList.vue'
 // @ is an alias to /src
-import { useCurrentUser } from 'vuefire';
+import { useCurrentUser, useDatabase, useDatabaseList } from 'vuefire';
+import ProfileBox from '../components/home/ProfileBox.vue';
+import ChannelList from '../components/home/ChannelList.vue';
+ import { ref as dbRef } from 'firebase/database'
 
 export default {
   name: 'HomeView',
   data() {
     return {
-      currentUser: useCurrentUser(),
+      currentUser: {},
+      currentServer: {}
     }
   },
+  async created() {
+    this.currentUser = useCurrentUser();
+    const db = useDatabase()
+    this.currentServer = useDatabaseList(dbRef(db, 'servers/', (this.currentUser.uid + this.currentUser.uid)), {once: true}).value[0];
+    await this.$nextTick();
+  },
+  mounted() {
+    console.log(this.currentServer);
+  },
   components: {
-    ServerList
+    ServerList,
+    ProfileBox,
+    ChannelList
+  },
+  methods: {
+    async changeServer(server) {
+      const db = useDatabase()
+      let servers = useDatabaseList(dbRef(db, 'servers/', (this.currentUser.uid + this.currentUser.uid)), {once: true}).value;
+
+      servers.forEach((s) => {
+        if (s.id == server.id) {
+          this.currentServer = s;
+        }
+      })
+      await this.$nextTick();
+    }
   }
 }
 </script>

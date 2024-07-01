@@ -2,9 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+#app {
+  font-family: "Nunito", sans-serif;
+}
+
 .title-bar {
     height:32px;
-    background-color: #333;
+    background-color: #111111;
     color: #fff;
     padding: 10px;
     display: flex;
@@ -39,7 +43,7 @@
   }
 
   .primaryColor {
-    background-color: #333;
+    background-color: #111111;
   }
 
   .divider-servers {
@@ -66,4 +70,32 @@
 
   .add-server-icon:hover {
     transform: rotate(90deg);
+  }
+
+  .profilebox {
+    background-color: #1d1d1d;
+    border-top-right-radius: 10px;
+  }
+
+  .channelList {
+    background-color: #333;
+  }
+
+  .serverHeader {
+    background-color: #1d1d1d;
+    border-bottom-right-radius: 10px;
+  }
+
+  .textChannel {
+    border-radius: 10px;
+    transition: 0.2s;
+  }
+
+  .textChannel:hover {
+    background-color: #4b4a4a;
+    cursor: pointer;
+  }
+
+  .channelHeader {
+    border-top: 2px solid #1d1d1d;
   }

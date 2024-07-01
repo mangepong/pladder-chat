@@ -9,27 +9,30 @@
         <div v-if="serversExist">
             <div v-for="server in serverList" :key="server.id" class="flex justify-center">
                 <!-- {{ server.name }} -->
-                  <div class="pt-3 w-4/5">
-                      <img src="../../assets/serverIcons/parkering.png" class="border serverlist-icons" @click="renderServer(server)">
-                  </div>
+                <div class="pt-3 w-4/5">
+                    <img :src="server.logo" class="border serverlist-icons"
+                        @click="changeServer(server)">
+                </div>
             </div>
         </div>
-        <div v-else>
+        <div>
             <div class="flex justify-center">
-                  <div class="pt-3 w-4/5">
-                      <img src="../../assets/serverIcons/add-icon.png" class="border border-transparent add-server-icon" @click="addServer()">
-                  </div>
+                <div class="pt-3 w-4/5">
+                    <img src="../../assets/serverIcons/add-icon.png" class="border border-transparent add-server-icon"
+                        @click="createServer()">
+                </div>
             </div>
         </div>
     </div>
 </template>
 
-<script >
+<script>
 // @ is an alias to /src
 //   import HelloWorld from '@/components/HelloWorld.vue'
-
-import { useCurrentUser } from 'vuefire'
-
+import { getDatabase, ref, push, set } from "firebase/database";
+import { useDatabaseList, useDatabase, useCurrentUser } from 'vuefire'
+import { ref as dbRef } from 'firebase/database'
+// import { ref as dbRef } from 'firebase/database'
 export default {
     name: 'ServerList',
     components: {},
@@ -37,7 +40,12 @@ export default {
         return {
             currentUser: useCurrentUser(),
             serverList: [],
+            db: useDatabase(),
         }
+    },
+    mounted() {
+        const db = useDatabase()
+        this.serverList = useDatabaseList(dbRef(db, 'servers'))
     },
     computed: {
         serversExist() {
@@ -45,11 +53,26 @@ export default {
         }
     },
     methods: {
-        renderServer(server) {
-            console.log(server)
+        changeServer(server) {
+            this.$emit("onServerChange", server)
+            // console.log(server)
         },
         addServer() {
-            console.log(this.currentUser.email);
+            // ska öppna en modal för att skapa en server
+        },
+        createServer(serverName = this.currentUser.displayName + "'s Server") {
+            const db = getDatabase();
+            const postListRef = ref(db, 'servers');
+            const newPostRef = push(postListRef);
+            set(newPostRef, {
+                id: this.currentUser.uid + this.currentUser.uid,
+                serverName: serverName,
+                owner: this.currentUser.uid,
+                members: [this.currentUser.uid],
+                textChannels: [{ id: "0", name: "Text Channel 1" }, { id: "1", name: "Text Channel 2" }, { id: "2", name: "Text Channel 3" }],
+                voiceChannels: [{ id: "0", name: "Voice Channel 1" }, { id: "1", name: "Voice Channel 2" }, { id: "2", name: "Voice Channel 3" }],
+                logo: "https://firebasestorage.googleapis.com/v0/b/pladder-4aa1e.appspot.com/o/pladder-logo-v2.png?alt=media&token=a3426b1d-688c-4b11-bcb3-cdb21d4f1580",
+            });
         }
     }
 }
