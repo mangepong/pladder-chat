@@ -59,6 +59,8 @@ export default {
     },
     methods: {
         login() {
+            this.email = "mange@mange.se";
+            this.password = "test123"
             signInWithEmailAndPassword(this.auth, this.email, this.password)
                 .then((data) => {
                     console.log('Successfully logged in!', data);

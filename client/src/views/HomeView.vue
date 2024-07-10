@@ -3,6 +3,8 @@
     <server-list @on-server-change="changeServer($event)" />
     <profile-box />
     <channel-list :current-server="currentServer" v-if="currentServer"/>
+    <member-list :current-server="currentServer" v-if="currentServer"/>
+    <chat-window v-if="currentServer"/>
   </div>
 </template>
 
@@ -13,6 +15,8 @@ import { useCurrentUser, useDatabase, useDatabaseList } from 'vuefire';
 import ProfileBox from '../components/home/ProfileBox.vue';
 import ChannelList from '../components/home/ChannelList.vue';
  import { ref as dbRef } from 'firebase/database'
+import MemberList from '../components/home/MemberList.vue';
+import ChatWindow from '../components/home/ChatWindow.vue';
 
 export default {
   name: 'HomeView',
@@ -34,7 +38,9 @@ export default {
   components: {
     ServerList,
     ProfileBox,
-    ChannelList
+    ChannelList,
+    MemberList,
+    ChatWindow
   },
   methods: {
     async changeServer(server) {

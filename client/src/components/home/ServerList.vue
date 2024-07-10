@@ -68,7 +68,7 @@ export default {
                 id: this.currentUser.uid + this.currentUser.uid,
                 serverName: serverName,
                 owner: this.currentUser.uid,
-                members: [this.currentUser.uid],
+                members: [JSON.stringify(this.currentUser)],
                 textChannels: [{ id: "0", name: "Text Channel 1" }, { id: "1", name: "Text Channel 2" }, { id: "2", name: "Text Channel 3" }],
                 voiceChannels: [{ id: "0", name: "Voice Channel 1" }, { id: "1", name: "Voice Channel 2" }, { id: "2", name: "Voice Channel 3" }],
                 logo: "https://firebasestorage.googleapis.com/v0/b/pladder-4aa1e.appspot.com/o/pladder-logo-v2.png?alt=media&token=a3426b1d-688c-4b11-bcb3-cdb21d4f1580",
