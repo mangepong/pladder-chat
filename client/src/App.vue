@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="title-bar">
-      <div class="title">Pladder</div>
+      <div class="title unselectable">Pladder</div>
       <div class="dragable-space"></div>
       <button class="minimize" @click="minimizeWindow">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"

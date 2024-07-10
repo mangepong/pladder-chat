@@ -51,6 +51,9 @@
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useFirebaseAuth, useCurrentUser, useFirebaseStorage, useStorageFile } from 'vuefire'
 import { ref as storageRef } from 'firebase/storage'
+import { getDatabase, ref, push, set } from "firebase/database";
+
+
 
 // const auth = useFirebaseAuth()
 
@@ -91,6 +94,7 @@ export default {
         async updateNewProfile() {
             await this.uploadProfilePicture();
             await updateProfile(this.currentUser, { displayName: this.username, photoURL: this.photoURL })
+            await this.addUsertoDatabase(useCurrentUser().value);
             console.log("efter uppdatering", useCurrentUser());
             this.$router.push("/home")
         },
@@ -116,6 +120,17 @@ export default {
             }
 
 
+        },
+
+        async addUsertoDatabase(user) {
+            const db = getDatabase();
+            const postListRef = ref(db, 'users');
+            const newPostRef = push(postListRef);
+            set(newPostRef, {
+                id: user.uid,
+                servers: [],
+                data: JSON.stringify(user)
+            });
         },
 
         routeLogin() {

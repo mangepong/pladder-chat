@@ -2,16 +2,16 @@
     <div class="text-white w-[250px] h-[calc(100vh - 60px)] channelList">
 
         <div class="w-full text-center h-[60px] serverHeader flex justify-center items-center">
-            <h1>{{ currentServer.serverName }}</h1>
+            <h1 class="unselectable">{{ currentServer.serverName }}</h1>
         </div>
 
         <div>
             <div class="mt-[20px] ml-[40px] text-sm">
-                <p>Text Channels</p>
+                <p class="unselectable">Text Channels</p>
             </div>
             <hr class="channelHeader w-[200px] mx-auto mt-[10px]">
             <div v-for="textChannel in currentServer.textChannels" :key="textChannel.id"
-                class="mt-[15px] ml-[25px] w-[200px] textChannel text-sm grid-flow-row-dense flex items-center">
+                class="mt-[15px] ml-[25px] w-[200px] textChannel text-sm grid-flow-row-dense flex items-center unselectable">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-4 ml-[10px]">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -25,12 +25,12 @@
 
         <div>
             <div class="mt-[20px] ml-[40px] text-sm">
-                <p>Voice Channels</p>
+                <p class="unselectable">Voice Channels</p>
             </div>
             <hr class="channelHeader w-[200px] mx-auto mt-[10px]">
 
             <div v-for="voiceChannel in currentServer.voiceChannels" :key="voiceChannel.id"
-                class="mt-[15px] ml-[25px] w-[200px] textChannel text-sm grid-flow-row-dense flex items-center">
+                class="mt-[15px] ml-[25px] w-[200px] textChannel text-sm grid-flow-row-dense flex items-center unselectable">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-4 ml-[10px]">
                     <path stroke-linecap="round" stroke-linejoin="round"

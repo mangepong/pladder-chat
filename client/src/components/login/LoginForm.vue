@@ -59,7 +59,7 @@ export default {
     },
     methods: {
         login() {
-            this.email = "mange@mange.se";
+            this.email = "mange2@mange.se";
             this.password = "test123"
             signInWithEmailAndPassword(this.auth, this.email, this.password)
                 .then((data) => {
